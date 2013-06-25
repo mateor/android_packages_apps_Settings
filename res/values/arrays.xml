@@ -918,6 +918,36 @@
         <item>2</item>
     </string-array>
 
+    <!-- CyanogenMod port STARTS -->
+
+    <!-- Performance settings -->
+    <string-array name="pref_zram_size_entries">
+        <item>Disabled</item>
+        <item>10%</item>
+        <item>18% (default)</item>
+        <item>26%</item>
+    </string-array>
+
+    <string-array name="pref_zram_size_values" translatable="false">
+        <item>0</item>
+        <item>10</item>
+        <item>18</item>
+        <item>26</item>
+    </string-array>
+
+    <string-array name="dithering_entries" translatable="false">
+        <item>@string/dithering_no_dither</item>
+        <item>@string/dithering_color_banding</item>
+        <item>@string/dithering_blur_effect</item>
+    </string-array>
+
+    <string-array name="dithering_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <!-- CyanogenMod port ENDS -->
+
     <!-- Entries and values for notification icons -->
     <string-array name="status_bar_max_notifications">
         <item>0</item>
@@ -975,9 +1005,9 @@
     <string-array name="entries_pie_angle">
         <item>@string/pie_angle_none</item>
         <item>@string/pie_angle_small</item>
+        <item>@string/pie_angle_normal</item>
         <item>@string/pie_angle_big</item>
         <item>@string/pie_angle_huge</item>
-        <item>@string/pie_angle_super</item>
     </string-array>
 
     <string-array name="values_pie_angle" translatable="false">
@@ -1154,34 +1184,17 @@
         <item>0</item>
     </string-array>
 
-    <!-- CyanogenMod port STARTS -->
-
-    <!-- Performance settings -->
-    <string-array name="pref_zram_size_entries">
-        <item>Disabled</item>
-        <item>10%</item>
-        <item>18% (default)</item>
-        <item>26%</item>
+    <!-- NFC settings. -->
+    <string-array name="nfc_polling_mode_entries">
+       <item>@string/nfc_polling_mode_screen_off</item>
+       <item>@string/nfc_polling_mode_screen_locked</item>
+       <item>@string/nfc_polling_mode_screen_unlocked</item>
     </string-array>
 
-    <string-array name="pref_zram_size_values" translatable="false">
-        <item>0</item>
-        <item>10</item>
-        <item>18</item>
-        <item>26</item>
+    <string-array name="nfc_polling_mode_values">
+       <item>1</item>
+       <item>2</item>
+       <item>3</item>
     </string-array>
-
-    <string-array name="dithering_entries" translatable="false">
-        <item>@string/dithering_no_dither</item>
-        <item>@string/dithering_color_banding</item>
-        <item>@string/dithering_blur_effect</item>
-    </string-array>
-
-    <string-array name="dithering_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-    <!-- CyanogenMod port ENDS -->
 
 </resources>
