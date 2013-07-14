@@ -773,8 +773,18 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <!-- GPS source selection -->
+    <string-array name="location_entries_gps_source">
+        <item>@string/location_gps_source_use_internal_antenna</item>
+    </string-array>	
+
+    <string-array name="location_values_gps_source" translatable="false">
+        <item>0</item>
+    </string-array>
+
     <!-- CyanogenMod port ENDS -->
- 
+
 
    <!-- User content ratings for restricted users [CHAR LIMIT=30] -->
     <string-array name="user_content_ratings_entries" translatable="false">

@@ -4462,8 +4462,16 @@
     <string name="pref_use_16bpp_alpha_title">16bit transparency</string>
     <string name="pref_use_16bpp_alpha_summary">Better graphics performance, but lower quality and may cause visual artifacts (requires reboot)</string>
 
-<!-- USB Mass Storage -->
+    <!-- USB Mass Storage -->
     <string name="usb_mass_storage_title">Mass storage</string>
     <string name="usb_mass_storage_summary">Enable USB mass storage</string>
+
+    <!-- GPS source selection -->
+    <string name="location_gps_source_title">GPS source</string>
+    <string name="location_gps_source_summary">Choose to use either an external Bluetooth GPS antenna or the internal GPS antenna as location provider</string>
+    <string name="location_gps_source_use_internal_antenna">Use internal GPS antenna</string>
+    <string name="location_gps_source_not_available_summary">No GPS antenna is available</string>
+    <string name="location_gps_source_notification_title">Alert</string>
+    <string name="location_gps_source_notification">The GPS source has been switched.</string>
 
 </resources>
