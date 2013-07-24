@@ -63,6 +63,10 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
     private static final String KEY_CURRENT_INPUT_METHOD = "current_input_method";
     private static final String KEY_INPUT_METHOD_SELECTOR = "input_method_selector";
     private static final String KEY_USER_DICTIONARY_SETTINGS = "key_user_dictionary_settings";
+    private static final String KEY_POINTER_SETTINGS_CATEGORY = "pointer_settings_category";
+    private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+    private static final String KEY_STYLUS_GESTURES = "stylus_gestures";
+    private static final String KEY_STYLUS_ICON_ENABLED = "stylus_icon_enabled";
 
     // false: on ICS or later
     private static final boolean SHOW_INPUT_METHOD_SWITCHER_SETTINGS = false;
@@ -96,6 +100,9 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
     private Intent mIntentWaitingForResult;
 
     private CheckBoxPreference mDisableFullscreenKeyboard;
+    private ListPreference mVolumeKeyCursorControl;
+    private PreferenceScreen mStylusGestures;
+    private CheckBoxPreference mStylusIconEnabled;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -176,6 +183,18 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
         mIm = (InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
         updateInputDevices();
 
+        mStylusGestures = (PreferenceScreen) findPreference(KEY_STYLUS_GESTURES);
+        mStylusIconEnabled = (CheckBoxPreference) findPreference(KEY_STYLUS_ICON_ENABLED);
+        // remove stylus preference for non stylus devices
+        if (!getResources().getBoolean(com.android.internal.R.bool.config_stylusGestures)) {
+            PreferenceCategory pointerSettingsCategory = (PreferenceCategory)
+                    findPreference(KEY_POINTER_SETTINGS_CATEGORY);
+            if (pointerSettingsCategory != null) {
+                pointerSettingsCategory.removePreference(mStylusGestures);
+                pointerSettingsCategory.removePreference(mStylusIconEnabled);
+            }
+        }
+
         // Spell Checker
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClass(getActivity(), SpellCheckersSettingsActivity.class);
@@ -183,6 +202,14 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                 "spellcheckers_settings"));
         if (scp != null) {
             scp.setFragmentIntent(this, intent);
+        }
+
+        mVolumeKeyCursorControl = (ListPreference) findPreference(KEY_VOLUME_KEY_CURSOR_CONTROL);
+        if(mVolumeKeyCursorControl != null) {
+            mVolumeKeyCursorControl.setOnPreferenceChangeListener(this);
+            mVolumeKeyCursorControl.setValue(Integer.toString(Settings.System.getInt(getActivity()
+                    .getContentResolver(), Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0)));
+            mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntry());
         }
 
         mDisableFullscreenKeyboard = (CheckBoxPreference) findPreference(PREF_DISABLE_FULLSCREEN_KEYBOARD);
@@ -270,6 +297,11 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
             }
         }
 
+        if (mStylusIconEnabled != null) {
+            mStylusIconEnabled.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.STYLUS_ICON_ENABLED, 0) == 1);
+        }
+
         // Hard keyboard
         if (!mHardKeyboardPreferenceList.isEmpty()) {
             for (int i = 0; i < sHardKeyboardKeys.length; ++i) {
@@ -355,6 +387,9 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                         chkPref.isChecked() ? 1 : 0);
                 return true;
             }
+        } else if (preference == mStylusIconEnabled) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.STYLUS_ICON_ENABLED, mStylusIconEnabled.isChecked() ? 1 : 0);
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -397,6 +432,15 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
                     saveInputMethodSelectorVisibility((String)value);
                 }
             }
+        }
+        if (preference == mVolumeKeyCursorControl) {
+            String volumeKeyCursorControl = (String) value;
+            int val = Integer.parseInt(volumeKeyCursorControl);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, val);
+            int index = mVolumeKeyCursorControl.findIndexOfValue(volumeKeyCursorControl);
+            mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntries()[index]);
+            return true;
         }
         return false;
     }
